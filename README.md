@@ -59,15 +59,6 @@ tab-exporter/
 - `https://www.googleapis.com/*`: Access Google APIs
 - `https://sheets.googleapis.com/*`: Access Google Sheets API
 
-## Documentation
-
-Additional guides are available in the `docs/` folder:
-
-- **[SETUP_GUIDE.md](docs/SETUP_GUIDE.md)** - Detailed step-by-step setup instructions
-- **[PUBLISHING_GUIDE.md](docs/PUBLISHING_GUIDE.md)** - How to publish to Chrome Web Store
-- **[PUBLISHING_CHECKLIST.md](docs/PUBLISHING_CHECKLIST.md)** - Publishing progress tracker
-- **[QUICK_START.md](docs/QUICK_START.md)** - Fast track setup with commands
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request and tag @anshuman-dev
