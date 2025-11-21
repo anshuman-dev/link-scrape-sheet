@@ -9,17 +9,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // Main function to handle tab export
 async function handleExportTabs() {
   try {
-    // Step 1: Get OAuth token
-    const token = await getAuthToken();
+    console.log('Starting tab export...');
+
+    // Step 1: Get OAuth token (will prompt user if needed)
+    const token = await getAuthToken(true);
     if (!token) {
-      return { success: false, error: 'Failed to authenticate with Google' };
+      return { success: false, error: 'Failed to authenticate with Google. Please try again.' };
     }
 
     // Step 2: Get all tabs in current window
     const tabs = await getAllTabs();
     if (tabs.length === 0) {
-      return { success: false, error: 'No tabs found' };
+      return { success: false, error: 'No tabs found in current window' };
     }
+
+    console.log(`Found ${tabs.length} tabs to export`);
 
     // Step 3: Create new Google Sheet
     const spreadsheetId = await createSpreadsheet(token, tabs);
@@ -27,29 +31,56 @@ async function handleExportTabs() {
       return { success: false, error: 'Failed to create spreadsheet' };
     }
 
+    console.log(`Spreadsheet created: ${spreadsheetId}`);
+
     // Step 4: Populate the sheet with tab data
     await populateSheet(token, spreadsheetId, tabs);
 
     // Step 5: Return the sheet URL
     const sheetUrl = `https://docs.google.com/spreadsheets/d/${spreadsheetId}`;
+    console.log('Export completed successfully');
     return { success: true, sheetUrl };
 
   } catch (error) {
     console.error('Error exporting tabs:', error);
+
+    // Provide user-friendly error message
+    if (error.message.includes('Authentication failed')) {
+      return {
+        success: false,
+        error: 'Authentication expired. Please click Export again to re-authorize.'
+      };
+    }
+
     return { success: false, error: error.message };
   }
 }
 
 // Get OAuth token using Chrome Identity API
-function getAuthToken() {
+function getAuthToken(interactive = true) {
   return new Promise((resolve, reject) => {
-    chrome.identity.getAuthToken({ interactive: true }, (token) => {
+    chrome.identity.getAuthToken({ interactive }, (token) => {
       if (chrome.runtime.lastError) {
         console.error('Auth error:', chrome.runtime.lastError);
         reject(chrome.runtime.lastError);
       } else {
+        console.log('Token obtained successfully');
         resolve(token);
       }
+    });
+  });
+}
+
+// Remove cached token when it's invalid
+function removeCachedToken(token) {
+  return new Promise((resolve) => {
+    if (!token) {
+      resolve();
+      return;
+    }
+    chrome.identity.removeCachedAuthToken({ token }, () => {
+      console.log('Cached token removed');
+      resolve();
     });
   });
 }
@@ -91,8 +122,16 @@ async function createSpreadsheet(token, tabs) {
   });
 
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Failed to create spreadsheet: ${error}`);
+    const errorData = await response.json();
+
+    // If 401 Unauthorized, the token is invalid
+    if (response.status === 401) {
+      console.error('Token is invalid or expired');
+      await removeCachedToken(token);
+      throw new Error('Authentication failed. Please try again to re-authorize.');
+    }
+
+    throw new Error(`Failed to create spreadsheet: ${JSON.stringify(errorData)}`);
   }
 
   const data = await response.json();
