@@ -49,3 +49,16 @@ downloads/
 # Logs
 *.log
 logs/
+
+# Chrome Extension
+# Note: icon files (*.png) should be committed
+
+# OAuth client secrets (NEVER commit these!)
+client_secret*.json
+credentials*.json
+
+# Setup and publishing documentation
+docs/
+
+# Extension packages
+*.zip
