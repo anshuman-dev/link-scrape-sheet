@@ -25,14 +25,7 @@ tab-exporter/
 └── README.md
 ```
 
-## Quick Start
 
-1. **Set up Google Cloud Project** with OAuth2 credentials
-2. **Add your Client ID** to `manifest.json`
-3. **Load extension** in Chrome (`chrome://extensions/`)
-4. **Start exporting** your tabs to Google Sheets!
-
-For detailed setup instructions, see the [Setup Guide](docs/SETUP_GUIDE.md) in the `docs/` folder.
 
 ## Usage
 
@@ -75,34 +68,6 @@ Additional guides are available in the `docs/` folder:
 - **[PUBLISHING_CHECKLIST.md](docs/PUBLISHING_CHECKLIST.md)** - Publishing progress tracker
 - **[QUICK_START.md](docs/QUICK_START.md)** - Fast track setup with commands
 
-## Publishing
-
-Want to make your extension public? See the [Publishing Guide](docs/PUBLISHING_GUIDE.md) for complete instructions on:
-- Creating store listing assets
-- Registering as Chrome Web Store developer ($5 one-time fee)
-- Submitting for review
-- Promoting your extension
-
-## Development
-
-To modify the extension:
-
-1. Make changes to the relevant files
-2. Go to `chrome://extensions/`
-3. Click the refresh icon on the extension card
-4. Test your changes
-
-## Security
-
-- Uses official Chrome Identity API for OAuth2
-- Tokens are handled securely by Chrome
-- No credentials stored in the extension
-- Requires explicit user consent for Google access
-
-## License
-
-MIT License - Feel free to use and modify
-
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request and tag @anshuman-dev
