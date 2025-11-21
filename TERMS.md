@@ -182,7 +182,7 @@ Any disputes shall be resolved through binding arbitration, except where prohibi
 ## 18. Contact Information
 
 For questions about these Terms:
-- **Email**: anshuman.dev@example.com
+- **Email**: mailsinghanshuman@gmail.com
 - **GitHub Issues**: https://github.com/anshuman-dev/link-scrape-sheet/issues
 - **Repository**: https://github.com/anshuman-dev/link-scrape-sheet
 

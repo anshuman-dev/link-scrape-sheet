@@ -121,7 +121,7 @@ This extension complies with:
 For questions, concerns, or requests regarding this privacy policy:
 
 - **GitHub Issues**: [Create an issue](https://github.com/anshuman-dev/link-scrape-sheet/issues)
-- **Email**: anshuman.dev@example.com
+- **Email**: mailsinghanshuman@gmail.com
 
 We aim to respond to all inquiries within 48 hours.
 
